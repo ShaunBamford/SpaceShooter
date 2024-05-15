@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn1yld8dq4iv"]
+
+[ext_resource type="PackedScene" uid="uid://btvkyf33nd5gb" path="res://scenes/enemy.tscn" id="1_871ah"]
+[ext_resource type="Texture2D" uid="uid://ds5ncgc7s14ie" path="res://textures/PNG/Enemies/enemyBlue5.png" id="2_p6sg2"]
+
+[node name="DiverEnemy" instance=ExtResource("1_871ah")]
+speed = 400
+hp = 1
+points = 200
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_p6sg2")
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="2"]
+position = Vector2(0, -23)

@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dp2im301w4b4i"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_hqimb"]
+[ext_resource type="PackedScene" uid="uid://dqeoiowq5tvck" path="res://scenes/player.tscn" id="2_dvn8x"]
+[ext_resource type="PackedScene" uid="uid://btvkyf33nd5gb" path="res://scenes/enemy.tscn" id="3_vdvnw"]
+[ext_resource type="PackedScene" uid="uid://dn1yld8dq4iv" path="res://scenes/diver_enemy.tscn" id="4_2nkhs"]
+[ext_resource type="PackedScene" uid="uid://c1w32wbt8d23q" path="res://scenes/hud.tscn" id="4_f33sx"]
+[ext_resource type="PackedScene" uid="uid://63nf1rje0tk6" path="res://scenes/game_over_sceen.tscn" id="5_s6bb8"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_hqimb")
+enemy_scenes = Array[PackedScene]([ExtResource("3_vdvnw"), ExtResource("4_2nkhs")])
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UILayer" instance=ExtResource("4_f33sx")]
+
+[node name="GameOverSceen" parent="UILayer" instance=ExtResource("5_s6bb8")]
+visible = false
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="player" parent="." instance=ExtResource("2_dvn8x")]
+position = Vector2(247, 887)
+scale = Vector2(0.7, 0.7)
+
+[node name="playerSpawnPos" type="Marker2D" parent="."]
+position = Vector2(270, 850)
+
+[node name="LazerContainer" type="Node2D" parent="."]
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
