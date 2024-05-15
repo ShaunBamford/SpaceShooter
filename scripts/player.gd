@@ -32,3 +32,7 @@ func shoot():
 func die():
 	killed.emit()
 	queue_free()
+
+
+func _on_button_pressed():
+	shoot()

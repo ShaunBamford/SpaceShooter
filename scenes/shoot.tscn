@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjjgkfc4a2y6c"]
+
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="1_25sq3"]
+[ext_resource type="Texture2D" uid="uid://db2pumjnvhhxd" path="res://textures/PNG/UI/189479.png" id="2_ri3s0"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Base" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+mouse_force_pass_scroll_events = false
+texture = ExtResource("1_25sq3")
+stretch_mode = 5
+
+[node name="Tip" type="TextureRect" parent="Base"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.5
+offset_top = -106.0
+offset_right = 84.5
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("2_ri3s0")
+expand_mode = 1
+stretch_mode = 5

@@ -1,0 +1,133 @@
+[gd_scene load_steps=15 format=3 uid="uid://dp2im301w4b4i"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_hqimb"]
+[ext_resource type="PackedScene" uid="uid://dqeoiowq5tvck" path="res://scenes/player.tscn" id="2_dvn8x"]
+[ext_resource type="PackedScene" uid="uid://btvkyf33nd5gb" path="res://scenes/enemy.tscn" id="3_vdvnw"]
+[ext_resource type="PackedScene" uid="uid://dn1yld8dq4iv" path="res://scenes/diver_enemy.tscn" id="4_2nkhs"]
+[ext_resource type="PackedScene" uid="uid://c1w32wbt8d23q" path="res://scenes/hud.tscn" id="4_f33sx"]
+[ext_resource type="PackedScene" uid="uid://63nf1rje0tk6" path="res://scenes/game_over_sceen.tscn" id="5_s6bb8"]
+[ext_resource type="Texture2D" uid="uid://03dab77axij6" path="res://textures/sounds/darkPurple.png" id="7_1gc1c"]
+[ext_resource type="AudioStream" uid="uid://ce70axbeolf4m" path="res://textures/sounds/sfx_laser2.ogg" id="8_hqnd4"]
+[ext_resource type="AudioStream" uid="uid://cqil1vgdjtlwy" path="res://textures/sounds/sfx_hit.mp3" id="9_6e0of"]
+[ext_resource type="AudioStream" uid="uid://82a36e5ie5f8" path="res://textures/sounds/death.mp3" id="10_kfs2u"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="11_ho3ht"]
+[ext_resource type="Script" path="res://scripts/mobile_shoot.gd" id="12_7yush"]
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="12_52yw1"]
+[ext_resource type="Texture2D" uid="uid://db2pumjnvhhxd" path="res://textures/PNG/UI/189479.png" id="13_ri42a"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_hqimb")
+enemy_scenes = Array[PackedScene]([ExtResource("3_vdvnw"), ExtResource("4_2nkhs")])
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(0, 960)
+
+[node name="PurpleStars" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+texture = ExtResource("7_1gc1c")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 540, 960)
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UILayer" instance=ExtResource("4_f33sx")]
+
+[node name="GameOverSceen" parent="UILayer" instance=ExtResource("5_s6bb8")]
+visible = false
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="player" parent="." instance=ExtResource("2_dvn8x")]
+position = Vector2(247, 887)
+scale = Vector2(0.7, 0.7)
+
+[node name="playerSpawnPos" type="Marker2D" parent="."]
+position = Vector2(270, 850)
+
+[node name="LazerContainer" type="Node2D" parent="."]
+
+[node name="EnemyContainer" type="Node2D" parent="."]
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="lazer" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("8_hqnd4")
+bus = &"sfx"
+
+[node name="hit" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("9_6e0of")
+bus = &"sfx"
+
+[node name="explode" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("10_kfs2u")
+bus = &"sfx"
+
+[node name="Test" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="Test"]
+
+[node name="Virtual joystick left" parent="Test/UI" instance=ExtResource("11_ho3ht")]
+offset_left = -42.0
+offset_top = -270.0
+offset_right = 258.0
+offset_bottom = 30.0
+action_left = "move_left"
+action_right = "move_right"
+action_up = "move_up"
+action_down = "move_down"
+
+[node name="Control" type="Control" parent="Test/UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 304.0
+offset_top = 711.0
+offset_right = -19.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_7yush")
+
+[node name="Base" type="TextureRect" parent="Test/UI/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+mouse_force_pass_scroll_events = false
+texture = ExtResource("12_52yw1")
+stretch_mode = 5
+
+[node name="Tip" type="TextureRect" parent="Test/UI/Control/Base"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.5
+offset_top = -106.0
+offset_right = 84.5
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("13_ri42a")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
