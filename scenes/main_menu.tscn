@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://dvyv1floy5cpu"]
+
+[ext_resource type="Script" path="res://scripts/mainMenu.gd" id="1_jiktb"]
+[ext_resource type="Texture2D" uid="uid://03dab77axij6" path="res://textures/sounds/darkPurple.png" id="2_6uago"]
+[ext_resource type="FontFile" uid="uid://bj4ynlmwfo4ox" path="res://textures/fonts/kenvector_future.ttf" id="3_00q4o"]
+[ext_resource type="Texture2D" uid="uid://ddehy7g73pfit" path="res://textures/PNG/UI/buttonBlue.png" id="4_24lfk"]
+[ext_resource type="FontFile" uid="uid://bsv28d1p0f46m" path="res://textures/fonts/kenvector_future_thin.ttf" id="5_5le7j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8d08x"]
+font = ExtResource("3_00q4o")
+font_size = 45
+
+[sub_resource type="LabelSettings" id="LabelSettings_tkf2o"]
+font = ExtResource("5_5le7j")
+font_size = 45
+font_color = Color(0, 0, 0.117647, 1)
+
+[sub_resource type="Theme" id="Theme_6irvb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vhlo"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glkur"]
+bg_color = Color(0.212305, 0.212305, 0.212305, 0.305882)
+
+[node name="mainMenu" type="Node2D"]
+script = ExtResource("1_jiktb")
+
+[node name="PurpleStars" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("2_6uago")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 540, 960)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 26.0
+offset_top = 81.0
+offset_right = 496.0
+offset_bottom = 133.0
+grow_horizontal = 2
+text = "SPACE INVADERS"
+label_settings = SubResource("LabelSettings_8d08x")
+
+[node name="ButtonBlue" type="Sprite2D" parent="."]
+position = Vector2(260, 271)
+texture = ExtResource("4_24lfk")
+
+[node name="Label" type="Label" parent="ButtonBlue"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -45.5
+offset_right = -47.0
+offset_bottom = 6.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "play"
+label_settings = SubResource("LabelSettings_tkf2o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="ButtonBlue"]
+offset_left = -111.0
+offset_top = -19.0
+offset_right = 111.0
+offset_bottom = 20.0
+theme = SubResource("Theme_6irvb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1vhlo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_glkur")
+
+[connection signal="pressed" from="ButtonBlue/Button" to="." method="_on_button_pressed"]
