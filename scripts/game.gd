@@ -81,5 +81,5 @@ func on_player_killed():
 	gos.set_score(score)
 	gos.set_high_score(high_score)
 	save_game()
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(0.1).timeout
 	gos.visible = true

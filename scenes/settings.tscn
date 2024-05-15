@@ -1,0 +1,159 @@
+[gd_scene load_steps=12 format=3 uid="uid://blx87w1eg86ku"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_c1s0g"]
+[ext_resource type="PackedScene" uid="uid://c2gu321gt5qex" path="res://scenes/volume_slider.tscn" id="2_7abco"]
+[ext_resource type="Texture2D" uid="uid://03dab77axij6" path="res://textures/sounds/darkPurple.png" id="2_ggrv3"]
+[ext_resource type="Texture2D" uid="uid://ddehy7g73pfit" path="res://textures/PNG/UI/buttonBlue.png" id="2_qerjn"]
+[ext_resource type="FontFile" uid="uid://bj4ynlmwfo4ox" path="res://textures/fonts/kenvector_future.ttf" id="3_c23bo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cb6a0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_evlj6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eheut"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ncqe"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_njy6k"]
+font = ExtResource("3_c23bo")
+font_size = 36
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jupgn"]
+font = ExtResource("3_c23bo")
+font_size = 81
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 0.701961)
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c1s0g")
+
+[node name="PurpleStars" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("2_ggrv3")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 540, 960)
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cb6a0")
+
+[node name="OptionButton" type="OptionButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -18.0
+offset_right = 98.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/OptionButton"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.5
+offset_top = -22.0
+offset_right = 41.5
+offset_bottom = 1.0
+grow_horizontal = 2
+text = "Resolution"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -68.0
+offset_right = 151.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="HSlider4" parent="VBoxContainer" instance=ExtResource("2_7abco")]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+bus_name = "Master"
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="HSlider5" parent="VBoxContainer" instance=ExtResource("2_7abco")]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+bus_name = "music"
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Sound Effects"
+horizontal_alignment = 1
+
+[node name="HSlider6" parent="VBoxContainer" instance=ExtResource("2_7abco")]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+bus_name = "sfx"
+
+[node name="back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 172.0
+offset_top = 676.0
+offset_right = 394.0
+offset_bottom = 715.0
+theme = SubResource("Theme_evlj6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_eheut")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1ncqe")
+icon = ExtResource("2_qerjn")
+
+[node name="Label" type="Label" parent="back"]
+layout_mode = 0
+offset_right = 223.0
+offset_bottom = 37.0
+text = "Back"
+label_settings = SubResource("LabelSettings_njy6k")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 239.0
+offset_right = 523.0
+offset_bottom = 331.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Settings"
+label_settings = SubResource("LabelSettings_jupgn")
+
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]
