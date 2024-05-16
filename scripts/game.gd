@@ -43,10 +43,13 @@ func save_game():
 	save_file.store_32(high_score)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if timer.wait_time > 0.3:
+	if timer.wait_time > 0.3 and score < 100000:
 		timer.wait_time -= delta*0.09
+	elif score >= 100000:
+		timer.wait_time = 0.1
 	else:
 		timer.wait_time = 0.3
+
 		
 	pb.scroll_offset.y += delta * scroll_speed
 	if pb.scroll_offset.y >= 960:

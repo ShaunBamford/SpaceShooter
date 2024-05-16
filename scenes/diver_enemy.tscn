@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ds5ncgc7s14ie" path="res://textures/PNG/Enemies/enemyBlue5.png" id="2_p6sg2"]
 
 [node name="DiverEnemy" instance=ExtResource("1_871ah")]
-speed = 400
+speed = 250
 hp = 1
 points = 200
 
