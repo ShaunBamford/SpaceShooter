@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dp2im301w4b4i"]
+[gd_scene load_steps=19 format=3 uid="uid://dp2im301w4b4i"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_hqimb"]
 [ext_resource type="PackedScene" uid="uid://dqeoiowq5tvck" path="res://scenes/player.tscn" id="2_dvn8x"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c1w32wbt8d23q" path="res://scenes/hud.tscn" id="4_f33sx"]
 [ext_resource type="PackedScene" uid="uid://nvwadgpgqi5d" path="res://scenes/kamikaze.tscn" id="5_muk0q"]
 [ext_resource type="PackedScene" uid="uid://63nf1rje0tk6" path="res://scenes/game_over_sceen.tscn" id="5_s6bb8"]
+[ext_resource type="PackedScene" uid="uid://b80jndg84tvj3" path="res://scenes/powerup.tscn" id="6_tr186"]
 [ext_resource type="Texture2D" uid="uid://03dab77axij6" path="res://textures/sounds/darkPurple.png" id="7_1gc1c"]
 [ext_resource type="AudioStream" uid="uid://ce70axbeolf4m" path="res://textures/sounds/sfx_laser2.ogg" id="8_hqnd4"]
 [ext_resource type="AudioStream" uid="uid://cqil1vgdjtlwy" path="res://textures/sounds/sfx_hit.mp3" id="9_6e0of"]
@@ -18,12 +19,12 @@
 
 [sub_resource type="GDScript" id="GDScript_waf5m"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_oc2d7"]
-diffuse_texture = ExtResource("13_ri42a")
+[sub_resource type="GDScript" id="GDScript_uo7qb"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_hqimb")
 enemy_scenes = Array[PackedScene]([ExtResource("3_vdvnw"), ExtResource("4_2nkhs"), ExtResource("4_7ja1c"), ExtResource("5_muk0q")])
+powerups = Array[PackedScene]([ExtResource("6_tr186")])
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -45,6 +46,10 @@ region_rect = Rect2(0, 0, 540, 960)
 visible = false
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="PowerUpTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
@@ -76,8 +81,10 @@ bus = &"sfx"
 [node name="Test" type="Node2D" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="Test"]
+visible = false
 
 [node name="Virtual joystick left" parent="Test/UI" instance=ExtResource("11_ho3ht")]
+visible = false
 offset_left = -42.0
 offset_top = -270.0
 offset_right = 258.0
@@ -88,6 +95,7 @@ action_up = "move_up"
 action_down = "move_down"
 
 [node name="Control" type="Control" parent="Test/UI"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,11 +126,6 @@ mouse_force_pass_scroll_events = false
 texture = ExtResource("12_52yw1")
 stretch_mode = 5
 
-[node name="Button" type="TouchScreenButton" parent="Test/UI/Control/Base"]
-position = Vector2(19.5, 17.5)
-scale = Vector2(0.321289, 0.321289)
-texture_normal = SubResource("CanvasTexture_oc2d7")
-
 [node name="Tip" type="TextureRect" parent="Test/UI/Control/Base"]
 visible = false
 layout_mode = 1
@@ -142,5 +145,16 @@ texture = ExtResource("13_ri42a")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Button" type="TouchScreenButton" parent="Test/UI/Control/Base"]
+position = Vector2(19, 18)
+scale = Vector2(0.321289, 0.321289)
+texture_normal = ExtResource("13_ri42a")
+texture_pressed = ExtResource("13_ri42a")
+script = SubResource("GDScript_uo7qb")
+
+[node name="PowerUpContainer" type="Node2D" parent="."]
+
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+[connection signal="timeout" from="PowerUpTimer" to="." method="_on_power_up_timer_timeout"]
 [connection signal="pressed" from="Test/UI/Control/Base/Button" to="player" method="_on_button_pressed"]
+[connection signal="released" from="Test/UI/Control/Base/Button" to="player" method="_on_button_released"]

@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var enemy_scenes : Array[PackedScene]  = []
+@export var powerups : Array[PackedScene]  = []
 
 @onready var playerSpawnPosition = $playerSpawnPos
 @onready var lazerContainer = $LazerContainer
@@ -9,6 +10,7 @@ extends Node2D
 @onready var hud = $UILayer/HUD
 @onready var gos = $UILayer/GameOverSceen
 @onready var pb = $ParallaxBackground
+@onready var puc = $PowerUpContainer
 
 @onready var lazer_sound = $SFX/lazer
 @onready var hit_sound = $SFX/hit
@@ -47,6 +49,7 @@ func _process(delta):
 		timer.wait_time -= delta*0.09
 	elif score >= 100000:
 		timer.wait_time = 0.1
+
 	else:
 		timer.wait_time = 0.3
 
@@ -86,3 +89,13 @@ func on_player_killed():
 	save_game()
 	await get_tree().create_timer(0.1).timeout
 	gos.visible = true
+	
+
+
+
+func _on_power_up_timer_timeout():
+	var p = powerups.pick_random().instantiate()
+	p.global_position = Vector2(randf_range(50, 500), -50)
+	p.killed.connect(_on_enemy_killed)
+	p.hit.connect(_on_enemy_hit)
+	enemy_container.add_child(p)

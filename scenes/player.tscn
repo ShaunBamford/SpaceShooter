@@ -7,6 +7,7 @@
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_b6rr2")
+power_time = 10
 
 [node name="muzzle" type="Marker2D" parent="."]
 position = Vector2(0, -60)

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b80jndg84tvj3"]
+
+[ext_resource type="Script" path="res://scripts/powerup.gd" id="1_fhcqp"]
+[ext_resource type="Texture2D" uid="uid://de6wbxajuq11t" path="res://textures/PNG/Enemies/tile_0151.png" id="2_ewvj6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e8riy"]
+radius = 28.0
+
+[node name="power up" type="Area2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_fhcqp")
+speed = 100
+points = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 2)
+scale = Vector2(3.15833, 3.15833)
+texture = ExtResource("2_ewvj6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e8riy")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1, -25)
+scale = Vector2(0.65, 0.65)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
